@@ -7,8 +7,9 @@ public class OperatorExample5 {
         int n1 = 10;
         int n2 = 11;
 
-        System.out.println(n1 >= n2 ? "n1이 n2보다 크거나 같다 " : "n2가 n1보다 작다 ");
+        String result =n1 >= n2 ? "n1이 n2보다 크거나 같다 " : "n2가 n1보다 작다 ";
                             //1항               2항                    3항
+        System.out.println(result);
 
         //mod(나머지) 짝수는 0, 홀수는 1
         int n3 = 10;

@@ -8,6 +8,7 @@ public class OperatorExample4 {
 
         System.out.println(n1);
         System.out.println();
+        n1--;
 
         int n2 = 40;
 
