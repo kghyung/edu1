@@ -11,7 +11,6 @@ public class OperatorExample4 {
         n1--;
 
         int n2 = 40;
-
         System.out.println(n2++); //++가 뒤로 오면 지정된 값 출력 후 +된다. ++가 앞으로 오면 1을 더한 후 출력된다.
         System.out.println(n2);
         System.out.println();

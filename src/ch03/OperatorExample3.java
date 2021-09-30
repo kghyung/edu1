@@ -10,8 +10,8 @@ public class OperatorExample3 {
         boolean result1 = n1 >= n2; //true
         boolean result2 = n3 > n4;  //false
 
-        System.out.println(result1 && result2); //and 연산자 (모든값이 true일때 true)
-        System.out.println(result1 || result2); //or 연산자  (하나의 값이라도 ture일때 true)
+        System.out.println(result1 && result2); //and 연산자 (모든값이 true일때 true) 이고
+        System.out.println(result1 || result2); //or 연산자  (하나의 값이라도 ture일때 true) 거나
 
         System.out.println(true && true && true && true && false); //or 연산자  (하나의 값이라도 ture일때 true)
         System.out.println(n1 >= n2 || n3 < n4 || n1 > n4); //or 연산자  (하나의 값이라도 ture일때 true)
