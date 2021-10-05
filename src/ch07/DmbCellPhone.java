@@ -26,3 +26,11 @@ public class DmbCellPhone extends CellPhone {
     값을 빼내는 방법 딱 1가지
     1.getter 메소드이용해서 값을 빼낸다.
      */
+
+    @Override
+    void printInfo() {
+        super.printInfo();
+        System.out.printf(", channel : %d\n", channel);
+    }
+
+}
