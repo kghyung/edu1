@@ -9,7 +9,7 @@ public class PrintExample {
         System.out.print("안녕하세요");
         System.out.println();
 
-        String nm = "홍길동";
+        String nm = "황장군";
         int age = 17;
         float height = 180.8f;
         char bloodtype = 'A';

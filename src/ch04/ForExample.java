@@ -8,7 +8,7 @@ public class ForExample {
         }
          */
 
-        for(int i=0; i<=10; i++){
+        for(int i=0; i<=10; i++){       //첫칸 초기화, 둘째칸 조건, 셋째칸 증감식
             System.out.println("i : " + i);
         }
     }
