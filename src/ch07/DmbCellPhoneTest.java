@@ -12,3 +12,12 @@ public class DmbCellPhoneTest {
 
     }
 }
+
+        dcp.powerOn();
+        dcp.powerOff();
+        dcp.printInfo();
+        System.out.println("채널 : " + dcp.channel);
+        dcp.sendMsg("안녕~~~");
+
+    }
+}
