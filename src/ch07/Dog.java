@@ -8,6 +8,6 @@ public class Dog extends Animal{
 
     @Override
     public void eat() {
-        System.out.println("소는 어그적 어그적 먹는다.");
+        System.out.println("개는 할짝할짝 먹는다.");
     }
 }

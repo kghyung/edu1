@@ -1,6 +1,6 @@
 package ch07;
 
-public class Television implements RemoteControl  {
+public class Television implements RemoteControl  {     //인터페이스는 implements 사용
     private  int volume;
 
 

@@ -4,12 +4,15 @@ public class Tv {
     private String brand;
     private int inch;
 
+    public Tv(){}
     public String getBrand() {
         return brand;
+
     }
 
     public void setBrand(String brand) {
         this.brand = brand;
+
     }
 
     public int getInch() {
