@@ -8,7 +8,7 @@ public class Game {
         CardDeck cd = new CardDeck();
         Dealer dealer = new Dealer();
         Gamer gamer = new Gamer();
-        Rule rule = new Rule();
+       // Rule rule = new Rule();
 
         for(int i=0; i<2; i++){ //순차적으로 각자 2장의 카드를 갖도록 한다.
             dealer.receiveCard(cd.getCard());
@@ -23,7 +23,9 @@ public class Game {
             if("n".equals(yn)){break;}
             gamer.receiveCard(cd.getCard());
         }
-            rule.getWinner(dealer, gamer);
+            System.out.println("-- 딜러 카드 리스트 --");
+            dealer.showAllMycards();
+            Rule.getWinner(dealer, gamer);
 
     }
 }

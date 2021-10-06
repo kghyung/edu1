@@ -4,7 +4,10 @@ public class Card {
     private String pattern; //무늬
     private String denomination; //숫자, 값
 
+    //1. 생성자 (클래스명과 이름이 같다.)
+    //2. (리턴타입이 없다.)
     public Card(String pattern, String denomination){
+        super();    //직속부모 지칭
         this.pattern = pattern;
         this.denomination = denomination;
     }
@@ -12,7 +15,6 @@ public class Card {
     public  String getPattern(){
         return this.pattern;
     }
-
     public String getDenomination(){
         return this.denomination;
     }

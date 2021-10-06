@@ -11,7 +11,6 @@ public class CardDeck { //기본 생성자            메소드, 생성자 다�
     public CardDeck(){
         init();
     }
-
     private void init(){
        String[] patterns = new String[]{ "스페이드", "하트", "클럽", "다이아몬드" };
         cards = new ArrayList();
