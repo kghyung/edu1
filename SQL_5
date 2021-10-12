@@ -1,0 +1,219 @@
+-- -------------------------------- like 문 사용법
+SELECT * FROM t_student2
+WHERE nm LIKE '신사임%';
+
+SELECT * FROM t_student2
+WHERE nm LIKE '사임%';
+
+SELECT * FROM t_student2
+WHERE nm LIKE '%사임%';
+
+SELECT * FROM t_student2
+WHERE nm LIKE '홍%';
+
+SELECT * FROM t_student2
+WHERE nm LIKE '%찬';
+
+SELECT * FROM t_student2
+WHERE nm LIKE '%__찬';
+
+
+
+
+-- ------------------------------ if 함수
+SELECT
+*, IF(age >= 24, '성인', 
+		IF(age = 22, '스물둘', '청소년')
+	) AS typ
+FROM t_student2;
+
+
+-- ------------------------------- case
+-- 25이상 > 성인
+-- 24 > 스물넷
+-- 23 > 스물셋
+-- 22 > 스물둘
+-- 나머지 청소년
+
+SELECT 
+*, 
+CASE 
+	WHEN age >= 25 THEN '성인'
+   WHEN age = 24 THEN '스물넷'
+	WHEN age = 23 THEN '스물셋'
+	WHEN age = 22 THEN '스물둘'
+	ELSE '청소년'
+END AS typ
+FROM t_student2;
+
+
+
+SELECT
+*, 
+CASE addr WHEN '서울' THEN '대도시'
+			 WHEN '부산' THEN '중도시'
+			 ELSE '소도시'
+END AS TYP2
+FROM t_student2;
+
+
+-- ------------------------------- 서브쿼리 사용법
+SELECT *
+FROM t_student2
+WHERE addr = '부산';
+
+
+-- 스칼라 값 (컬럼 1개, 레코드 1개)
+SELECT addr FROM t_student2
+WHERE sno = 6;
+
+
+SELECT *
+FROM t_student2
+WHERE addr = (SELECT addr FROM t_student2 WHERE sno = 6);
+
+-- sno가 6, 7번과 같은 addr인 사람들 전부 뽑아내기
+SELECT *
+FROM t_student2
+WHERE addr IN ('부산', '서울');
+-- WHERE addr = '부산' OR addr = '서울';
+
+SELECT *
+FROM t_student2
+WHERE addr IN (SELECT addr FROM t_student2 WHERE SNO IN (6, 7));
+
+
+-- 셀프 조인으로 해결
+
+SELECT A.*
+FROM t_student2 A
+INNER JOIN t_student2 B
+ON A.addr = B.addr
+WHERE B.sno IN (6, 7);
+
+
+
+-- --------------------------------------------------------------- 내장 함수
+-- 숫자 함수
+
+SELECT -10, 10, ABS(-10), ABS(10);
+
+SELECT CEIL(10.0), CEIL(10.1), CEIL(10.5), CEIL(10.9); -- 올림
+SELECT CEILING(10.01), CEILING(10.5), CEILING(10.9);
+SELECT ROUND(10.1), ROUND(10.5), ROUND(10.9); -- 반올림
+SELECT FLOOR(10.1), FLOOR(10.5), FLOOR(10.9); -- 내림
+
+
+
+SELECT ROUND(10.44, 1), ROUND(10.45, 1)
+, TRUNCATE(10.44, 1), TRUNCATE(10.45, 1);
+
+TRUNCATE TABLE 테이블명;
+DELETE FROM 테이블명;
+
+SELECT *, GREATEST(sno, hno, 5), LEAST(sno, hno, 5)
+FROM t_studenthobby;
+
+
+SELECT INTERVAL(8, 1, 2, 3, 6, 7);
+
+-- 문자 함수
+
+SELECT CONCAT('안녕', '하세요', '누구눅', '입니다');
+SELECT CONCAT('10000', '원');
+
+SELECT INSERT('ABCDEFG', 3, 0, '가나'); 
+SELECT INSERT('ABCDEFG', 3, 1, '가나'); 
+SELECT INSERT('ABCDEFG', 3, 2, '가나'); 
+
+SELECT REPLACE('ABCDEFG', 'D', '디');
+SELECT LEFT('ABCDEFG', 4);
+SELECT RIGHT('ABCDEFG', 4);
+
+SELECT MID(TRIM(' ABCDEFG'), 3, 4), SUBSTRING('ABCDEFG', 3, 4);
+SELECT LCASE('AbCdEfG'), UCASE('AbCdEfG');
+SELECT REVERSE('AbCdEfG')
+, LEFT(replace(UCASE(REVERSE('AbCdEfG')), 'D', '디'), 4);
+
+
+-- 날짜
+
+SELECT NOW(), SYSDATE(), CURRENT_TIMESTAMP();
+SELECT DATE_FORMAT(NOW(), '%y년 %m월 %d일 %r');
+
+
+SELECT WEEKDAY(NOW());
+
+
+-- WEEKDAY(), NOW(), CASE문을 활용하여 
+-- 0 > 월요일
+-- 1 > 화요일
+-- 2 > 수요일
+-- 3 > 목요일
+-- 4 > 금요일
+-- 5 > 토요일
+-- 6 > 일요일
+-- 가 나타나도록 하세요.
+
+SELECT 
+CONCAT(
+	CASE WEEKDAY(NOW())
+		WHEN 0 THEN '월'
+		WHEN 1 THEN '화'
+		WHEN 2 THEN '수'
+		WHEN 3 THEN '목'
+		WHEN 4 THEN '금'	
+		WHEN 5 THEN '토'
+		WHEN 6 THEN '일'	
+	END, 
+'요일') AS weekday;
+
+
+SELECT DATEDIFF(DATE('2021-10-30'), now()) as dday;
+
+
+SELECT concat(FORMAT(10000000000, 0), '원');
+SELECT concat(CAST(10000 AS CHAR), '원'), CONVERT(10000, CHAR);
+
+-- union VS union all 차이점 및 union 이해하기
+
+SELECT nm, addr FROM t_student
+UNION ALL
+SELECT nm, addr FROM t_student2;
+
+
+-- distinct 중복 제거
+SELECT DISTINCT * FROM t_student2;
+
+SELECT addr FROM t_student2;
+SELECT distinct addr FROM t_student2;
+
+-- insert + select문
+INSERT INTO t_student2
+(nm, age, addr)
+VALUES
+('', '', '');
+
+INSERT INTO t_student2
+(nm, age, addr)
+SELECT '김구', 32, '원주';
+
+INSERT INTO t_student2
+(nm, age, addr)
+SELECT '이순신', 34, addr
+FROM t_student2
+WHERE sno = 5; 
+
+SELECT * FROM t_student2;
+
+
+
+-- ------------------------------------------------ 데이터 사전
+-- DB에 있는 모든 테이블 조회
+SHOW FULL TABLES;
+
+-- 특정 테이블 인덱스 조회
+SHOW INDEX FROM t_student2;
+
+-- DB에 있는 모든 view 조회
+SHOW FULL TABLES WHERE TABLE_TYPE = 'VIEW';
