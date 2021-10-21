@@ -1,0 +1,118 @@
+
+CREATE TABLE T_CUSTOMER(
+	CUS_NO INT PRIMARY KEY,
+	NM VARCHAR(10) NOT NULL
+);
+
+ 
+CREATE TABLE T_ORDER (
+	O_NO INT PRIMARY KEY,
+	CUS_NO INT,
+	O_DATE DATE DEFAULT NOW(),
+	O_PRICE INT DEFAULT 0,
+	FOREIGN KEY (CUS_NO) REFERENCES T_CUSTOMER(CUS_NO)
+);
+
+DROP TABLE T_ORDER;
+
+
+INSERT INTO t_customer
+
+(cus_no, nm)
+
+VALUES
+
+(3, '홍길동'),(5, '이순신') ;
+
+ 
+
+INSERT INTO T_ORDER
+
+(o_no,cus_no,o_price)
+
+VALUES
+
+(1, 3, 55000),(2, 5, 70000),(3, 3, 60000) ;
+-- -------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS proc_INS_ORDER; 
+-- IF EXISTS가 있으면 에러안뜨고 있으면 삭제 시킴(문제나옴)
+
+DELIMITER $$ 
+CREATE PROCEDURE proc_INS_ORDER(
+	P_CUS_NO INTEGER,
+	P_PRICE INTEGER
+)
+BEGIN
+	DECLARE V_O_NO INTEGER; -- 변수 선언
+	
+	SELECT IFNULL(MAX(o_no), 0) + 1 
+	INTO V_O_NO	
+	FROM t_order;
+	
+	INSERT INTO t_order
+	(o_no, cus_no, o_price)
+	VALUES
+	(V_O_NO, P_CUS_NO, P_PRICE);
+	
+END $$
+DELIMITER ;
+
+
+CALL proc_INS_ORDER(5, 20000);
+
+SELECT * FROM t_order;
+
+SELECT NOW();
+
+-- PL/SQL > Oracle
+-- T-SQL > MS - SQL
+
+
+
+-- function ------------------
+
+DROP FUNCTION if EXISTS pro_INS_ORDER;
+
+
+DELIMITER $$ 
+CREATE FUNCTION get_name(
+	nm VARCHAR(20),
+	age int
+) RETURNS VARCHAR(30)
+BEGIN
+	DECLARE AGE_TITLE VARCHAR(20);
+	DECLARE NAME_TITLE varchar(20);
+	DECLARE RESULT VARCHAR(20);	
+	SET NAME_TITLE = CONCAT(nm, ' IS ');	
+	IF(age > 30) THEN
+		SET AGE_TITLE = 'OLD';
+	ELSE
+		SET AGE_TITLE = 'YOUNG';
+	END IF;	
+	SET RESULT = CONCAT(NAME_TITLE, AGE_TITLE);	
+	RETURN RESULT;
+END $$
+DELIMITER ;
+
+SELECT get_name(' 홍 길 동 ', 29);
+
+DROP FUNCTION if EXISTS get_name;
+
+-- -------------- trigger -----------------
+
+DELETE FROM T_CUSTOMER
+where cus_no  3;
+
+
+DROP TRIGGER IF EXISTS trg_DEL_CUSTOMER;
+
+DELIMITER $$
+CREATE TRIGGER trg_DEL_CUSTOMER
+BEFORE DELETE ON t_customer
+FOR EACH ROW
+BEGIN
+	DELETE FROM t_order
+	WHERE cus_no = OLD.cus_no;
+END $$
+DELIMITER ;
